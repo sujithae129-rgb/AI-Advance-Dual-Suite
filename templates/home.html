@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Machine Learning Hub</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background: radial-gradient(circle at top, #1a1a2e 0%, #0f0f1a 100%); 
+            color: #ffffff; 
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .hub-container { text-align: center; max-width: 900px; width: 100%; }
+        h1 { 
+            font-size: 3rem; font-weight: 800; margin-bottom: 10px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .subtitle { color: #8a8ab0; font-size: 1.2rem; margin-bottom: 50px; }
+        .grid { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
+        .card {
+            background: rgba(25, 25, 45, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 40px 30px;
+            border-radius: 20px;
+            width: 380px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #00f2fe;
+            box-shadow: 0 15px 30px rgba(0, 242, 254, 0.2);
+        }
+        .card h2 { font-size: 1.5rem; margin-bottom: 15px; color: #ffffff; }
+        .card p { color: #a0a0c8; font-size: 0.95rem; line-height: 1.5; margin-bottom: 25px; }
+        .badge {
+            display: inline-block; padding: 6px 12px; font-size: 0.8rem; 
+            font-weight: 700; border-radius: 20px; background: #00f2fe; color: #0f0f1a;
+        }
+        .badge.minor { background: #ff416c; color: white; }
+    </style>
+</head>
+<body>
+    <div class="hub-container">
+        <h1>AI & Machine Learning Hub 🚀</h1>
+        <p class="subtitle">Suji's Professional Portfolio Project Portfolio</p>
+        
+        <div class="grid">
+            <!-- Major Project Card -->
+            <a href="/diabetes" class="card">
+                <span class="badge">MAJOR PROJECT</span>
+                <h2 style="margin-top: 15px;">Diabetes Diagnostic Engine</h2>
+                <p>Advanced healthcare analytics system driven by Scikit-Learn classification algorithms to analyze patient physiological vitals.</p>
+                <div style="color: #00f2fe; font-weight: 600;">Launch Engine →</div>
+            </a>
+
+            <!-- Minor Project Card -->
+            <a href="/movie" class="card">
+                <span class="badge minor">MINOR PROJECT</span>
+                <h2 style="margin-top: 15px;">CineMatch Pro Engine</h2>
+                <p>Vector-based recommendation platform utilizing natural language feature extraction and real-time Cosine Similarity matrix mapping.</p>
+                <div style="color: #ff416c; font-weight: 600;">Launch Engine →</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
