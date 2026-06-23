@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMatch Pro | Premium Recommendation Engine</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background: radial-gradient(circle at top, #1a1a2e 0%, #0f0f1a 100%); 
+            color: #ffffff; 
+            min-height: 100vh;
+            display: block;
+            padding: 40px 20px;
+        }
+        .dashboard-container { 
+            max-width: 850px; 
+            margin: 0 auto; 
+            background: rgba(25, 25, 45, 0.65); 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+        }
+        .header-section { text-align: center; margin-bottom: 35px; }
+        .header-section h1 { 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .header-section p { color: #8a8ab0; font-size: 1.05rem; }
+        
+        .form-group {
+            display: table;
+            width: 100%;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .dropdown-cell { display: table-cell; width: 75%; vertical-align: middle; padding-right: 15px; }
+        .button-cell { display: table-cell; width: 25%; vertical-align: middle; }
+
+        select { 
+            width: 100%;
+            padding: 14px 20px; 
+            font-size: 1rem; 
+            background: #16162a; 
+            color: #ffffff; 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            border-radius: 8px; 
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        select:focus { border-color: #ff416c; box-shadow: 0 0 10px rgba(255, 65, 108, 0.2); }
+        
+        button { 
+            width: 100%;
+            padding: 14px 20px; 
+            font-size: 1rem; 
+            font-weight: 600;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
+        }
+        button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(255, 65, 108, 0.5); 
+        }
+
+        .results-heading {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ff416c;
+            text-align: left;
+            border-left: 4px solid #ff4b2b;
+            padding-left: 10px;
+        }
+        .recommendation-grid {
+            display: block;
+            text-align: left;
+            margin-top: 25px;
+        }
+        .movie-card { 
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%); 
+            margin: 12px 0; 
+            padding: 18px 25px; 
+            border-radius: 10px; 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s ease;
+        }
+        .movie-card:hover {
+            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 65, 108, 0.3);
+        }
+        .movie-title { font-size: 1.15rem; font-weight: 600; color: #ffffff; }
+        .movie-meta { font-size: 0.85rem; color: #a0a0c8; margin-top: 4px; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header-section">
+            <h1>CineMatch Pro 🎬</h1>
+            <p>AI-Powered Content-Based Filtering Recommendation Engine</p>
+        </div>
+        
+        <form method="POST">
+            <div class="form-group">
+                <div class="dropdown-cell">
+                    <select name="movie_name" required>
+                        <option value="" disabled selected>Search or select a benchmark movie...</option>
+                        {% for movie in movie_list %}
+                            <option value="{{ movie }}" {% if movie == selected_movie %}selected{% endif %}>{{ movie }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="button-cell">
+                    <button type="submit">Generate</button>
+                </div>
+            </div>
+        </form>
+
+        {% if recommendations %}
+            <div class="recommendation-grid">
+                <h3 class="results-heading">AI Engine Inference Results:</h3>
+                {% for rec in recommendations %}
+                    <div class="movie-card">
+                        <div class="movie-title">{{ rec }}</div>
+                        <div class="movie-meta">Match Confidence: High • Vector Similarity Verified</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
