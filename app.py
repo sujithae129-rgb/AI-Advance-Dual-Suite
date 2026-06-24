@@ -53,13 +53,13 @@ except Exception as e:
 @app.route('/movie')
 def movie_home():
     # Central Hub matrix launcher or default movie dashboard
-    return render_template('index.html', movie_list=movies['title'].values if 'movies' in locals() else [])
+    return render_template('index.html', movie_list=list(movies['title'].values))
 
 @app.route('/recommend_movie', methods=['POST'])
 def recommend_movie():
     selected_movie = request.form.get('movie_name')
     if not selected_movie:
-        return render_template('index.html', movie_list=movies['title'].values)
+        return render_template('index.html', movie_list=list(movies['title'].values))
         
     try:
         movie_index = movies[movies['title'] == selected_movie].index[0]
