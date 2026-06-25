@@ -33,11 +33,7 @@ def predict_diabetes():
                 float(request.form['dpf']),
                 float(request.form['age'])
             ]
-            features_value = [np.array(input_features)]
-            features_name = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
-            
-            df = pd.DataFrame(features_value, columns=features_name)
-            prediction = diabetes_model.predict(df)
+            prediction = diabetes_model.predict([input_features])
             
             if prediction == 1:
                 res_val = "Diabetes Positive"
