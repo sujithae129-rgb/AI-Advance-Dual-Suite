@@ -5,9 +5,9 @@ import pickle
 
 app = Flask(__name__)
 
-# ==========================================
-# 1. DIABETES PREDICTION CONFIGURATION
-# ==========================================
+# =======================================================
+# # 1. DIABETES PREDICTION CONFIGURATION
+# =======================================================
 # Loading the diabetes model
 try:
     diabetes_model = pickle.load(open('model.pkl', 'rb'))
@@ -16,59 +16,41 @@ except Exception as e:
 
 @app.route('/diabetes')
 def diabetes_home():
-    # Idhu namma ippo maathuna diabetes_predict.html page-ah open pannum
     return render_template('diabetes_predict.html')
 
 @app.route('/predict_diabetes', methods=['POST'])
 def predict_diabetes():
     if request.method == 'POST':
-        # Collecting 8 features for diabetes prediction
-        <!-- Pregnancies Input -->
-<div class="mb-3">
-    <label class="form-label font-weight-bold">Pregnancies</label>
-    <input type="number" step="any" name="pregnancies" class="form-control" placeholder="e.g. 2" required>
-</div>
-
-<!-- Blood Pressure Input -->
-<div class="mb-3">
-    <label class="form-label font-weight-bold">Blood Pressure</label>
-    <input type="number" step="any" name="blood_pressure" class="form-control" placeholder="e.g. 72" required>
-</div>
-
-<!-- Skin Thickness Input -->
-<div class="mb-3">
-    <label class="form-label font-weight-bold">Skin Thickness</label>
-    <input type="number" step="any" name="skin_thickness" class="form-control" placeholder="e.g. 35" required>
-</div>
-
-<!-- Insulin Input -->
-<div class="mb-3">
-    <label class="form-label font-weight-bold">Insulin Level</label>
-    <input type="number" step="any" name="insulin" class="form-control" placeholder="e.g. 0" required>
-</div>
-
-<!-- Diabetes Pedigree Function Input -->
-<div class="mb-3">
-    <label class="form-label font-weight-bold">Diabetes Pedigree Function</label>
-    <input type="number" step="0.001" name="dpf" class="form-control" placeholder="e.g. 0.627" required>
-</div>
-        
-        features_name = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 
-                         'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
-        
-        df = pd.DataFrame(features_value, columns=features_name)
-        prediction = diabetes_model.predict(df)
-        
-        if prediction == 1:
-            res_val = "Diabetes Positive"
-        else:
-            res_val = "Diabetes Negative"
+        try:
+            # Fetching features by their exact HTML input name attribute
+            input_features = [
+                float(request.form['pregnancies']),
+                float(request.form['glucose']),
+                float(request.form['blood_pressure']),
+                float(request.form['skin_thickness']),
+                float(request.form['insulin']),
+                float(request.form['bmi']),
+                float(request.form['dpf']),
+                float(request.form['age'])
+            ]
+            features_value = [np.array(input_features)]
+            features_name = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
             
-        return render_template('diabetes_predict.html', prediction_text=f'Result: {res_val}')
+            df = pd.DataFrame(features_value, columns=features_name)
+            prediction = diabetes_model.predict(df)
+            
+            if prediction == 1:
+                res_val = "Diabetes Positive"
+            else:
+                res_val = "Diabetes Negative"
+                
+            return render_template('diabetes_predict.html', prediction_text=f'Result: {res_val}')
+        except Exception as e:
+            return render_template('diabetes_predict.html', prediction_text=f'Error: {str(e)}')
 
-# ==========================================
-# 2. MOVIE RECOMMENDATION CONFIGURATION
-# ==========================================
+# =======================================================
+# # 2. MOVIE RECOMMENDATION CONFIGURATION
+# =======================================================
 try:
     movies_dict = pickle.load(open('movies.pkl', 'rb'))
     movies = pd.DataFrame(movies_dict)
@@ -79,14 +61,13 @@ except Exception as e:
 @app.route('/')
 @app.route('/movie')
 def movie_home():
-    # Central Hub matrix launcher or default movie dashboard
-    return render_template('index.html', movie_list=list(movies['title'].values))
+    return render_template('index.html', movie_list=movies['title'].values)
 
 @app.route('/recommend_movie', methods=['POST'])
 def recommend_movie():
     selected_movie = request.form.get('movie_name')
     if not selected_movie:
-        return render_template('index.html', movie_list=list(movies['title'].values))
+        return render_template('index.html', movie_list=movies['title'].values)
         
     try:
         movie_index = movies[movies['title'] == selected_movie].index[0]
