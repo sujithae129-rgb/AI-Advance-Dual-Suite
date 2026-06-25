@@ -6,9 +6,8 @@ import pickle
 app = Flask(__name__)
 
 # =======================================================
-# # 1. DIABETES PREDICTION CONFIGURATION
+# 1. DIABETES PREDICTION CONFIGURATION
 # =======================================================
-# Loading the diabetes model
 try:
     diabetes_model = pickle.load(open('model.pkl', 'rb'))
 except Exception as e:
@@ -33,6 +32,8 @@ def predict_diabetes():
                 float(request.form['dpf']),
                 float(request.form['age'])
             ]
+            
+            # Direct prediction using the 8 features array
             prediction = diabetes_model.predict([input_features])
             
             if prediction == 1:
@@ -45,7 +46,7 @@ def predict_diabetes():
             return render_template('diabetes_predict.html', prediction_text=f'Error: {str(e)}')
 
 # =======================================================
-# # 2. MOVIE RECOMMENDATION CONFIGURATION
+# 2. MOVIE RECOMMENDATION CONFIGURATION
 # =======================================================
 try:
     movies_dict = pickle.load(open('movies.pkl', 'rb'))
