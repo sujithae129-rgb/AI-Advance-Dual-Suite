@@ -19,17 +19,16 @@ def diabetes_home():
 
 @app.route('/predict_diabetes', methods=['POST'])
 def predict_diabetes():
-    @app.route('/predict_diabetes', methods=['POST'])
-def predict_diabetes():
     if request.method == 'POST':
         try:
+            # Model ethirpakkura 3 features mattum precise-aa edukkirom
             glucose = float(request.form['glucose'])
             bmi = float(request.form['bmi'])
             age = float(request.form['age'])
             
             input_features = [glucose, bmi, age]
             
-            # Model prediction line
+            # Prediction array passing
             prediction = diabetes_model.predict([input_features])
             
             if prediction == 1:
@@ -40,7 +39,7 @@ def predict_diabetes():
             return render_template('diabetes_predict.html', prediction_text=f'Result: {res_val}')
         except Exception as e:
             return render_template('diabetes_predict.html', prediction_text=f'Error: {str(e)}')
-    
+
 # =======================================================
 # 2. MOVIE RECOMMENDATION CONFIGURATION
 # =======================================================
